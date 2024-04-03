@@ -86,7 +86,7 @@ const Dot = ({
   if (onDotPress) {
     return <TouchableOpacity
       onPress={() => {
-        onDotPress(currentIndex);
+        onDotPress(index);
       }}>
       <Animated.View
         style={[
