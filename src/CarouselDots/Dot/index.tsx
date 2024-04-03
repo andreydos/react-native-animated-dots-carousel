@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated } from 'react-native';
+import {Animated, TouchableOpacity} from 'react-native';
 
 import usePrevious from '../use-previous';
 
@@ -17,19 +17,21 @@ interface Dot {
   index: number;
   carouselState: CarouselState;
   verticalOrientation: boolean;
+  onDotPress?: (step: number) => void
   interpolateOpacityAndColor: boolean;
 }
 
 const Dot = ({
-  maxIndicators,
-  activeIndicatorConfig,
-  inactiveIndicatorConfig,
-  decreasingDots,
-  index,
-  carouselState,
-  verticalOrientation,
-  interpolateOpacityAndColor,
-}: Dot): JSX.Element => {
+               maxIndicators,
+               activeIndicatorConfig,
+               inactiveIndicatorConfig,
+               decreasingDots,
+               onDotPress,
+               index,
+               carouselState,
+               verticalOrientation,
+               interpolateOpacityAndColor,
+             }: Dot): JSX.Element => {
   const { currentIndex, state } = carouselState;
   const [type, setType] = useState(
     getDotStyle({
@@ -81,15 +83,50 @@ const Dot = ({
     outputRange: [prevType.size, type.size],
   });
 
+  if (onDotPress) {
+    return <TouchableOpacity
+      onPress={() => {
+        onDotPress(currentIndex);
+      }}>
+      <Animated.View
+        style={[
+          {
+            backgroundColor: interpolateOpacityAndColor
+              ? animatedValue.current.interpolate({
+                inputRange: [0, 1],
+                outputRange: [prevType.color, type.color],
+              })
+              : type.color,
+            borderColor: type.borderColor,
+            borderRadius: type.size,
+            borderWidth: type.borderWidth,
+            marginHorizontal: verticalOrientation ? 0 : type.margin,
+            marginVertical: verticalOrientation ? type.margin : 0,
+            opacity: interpolateOpacityAndColor
+              ? animatedValue.current.interpolate({
+                inputRange: [0, 1],
+                outputRange: [prevType.opacity, type.opacity],
+              })
+              : type.opacity,
+          },
+          {
+            height: size,
+            width: size,
+          },
+        ]}
+      />
+    </TouchableOpacity>
+  }
+
   return (
     <Animated.View
       style={[
         {
           backgroundColor: interpolateOpacityAndColor
             ? animatedValue.current.interpolate({
-                inputRange: [0, 1],
-                outputRange: [prevType.color, type.color],
-              })
+              inputRange: [0, 1],
+              outputRange: [prevType.color, type.color],
+            })
             : type.color,
           borderColor: type.borderColor,
           borderRadius: type.size,
@@ -98,9 +135,9 @@ const Dot = ({
           marginVertical: verticalOrientation ? type.margin : 0,
           opacity: interpolateOpacityAndColor
             ? animatedValue.current.interpolate({
-                inputRange: [0, 1],
-                outputRange: [prevType.opacity, type.opacity],
-              })
+              inputRange: [0, 1],
+              outputRange: [prevType.opacity, type.opacity],
+            })
             : type.opacity,
         },
         {

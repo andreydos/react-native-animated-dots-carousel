@@ -13,6 +13,7 @@ export interface CarouselDotsProps {
   length: number;
   currentIndex: number;
   maxIndicators: number;
+  onDotPress: (dotIndex: number) => void;
   activeIndicatorConfig: DotConfig;
   inactiveIndicatorConfig: DotConfig;
   decreasingDots: DecreasingDot[];
@@ -61,15 +62,16 @@ const calculateOffsetSize = (
   return result.totalSize + result.offset * minimumSize;
 };
 const CarouselDots = ({
-  length,
-  currentIndex,
-  maxIndicators,
-  activeIndicatorConfig,
-  inactiveIndicatorConfig,
-  decreasingDots,
-  verticalOrientation = false,
-  interpolateOpacityAndColor = true,
-}: CarouselDotsProps): JSX.Element => {
+                        length,
+                        currentIndex,
+                        maxIndicators,
+                        onDotPress,
+                        activeIndicatorConfig,
+                        inactiveIndicatorConfig,
+                        decreasingDots,
+                        verticalOrientation = false,
+                        interpolateOpacityAndColor = true,
+                      }: CarouselDotsProps): JSX.Element => {
   const refScrollView = useRef<ScrollView>(null);
   const [curIndex, setCurIndex] = useState<number>(currentIndex);
   const positiveMomentum = useRef<boolean>(false);
@@ -135,6 +137,7 @@ const CarouselDots = ({
             <Dot
               key={i}
               index={i}
+              onDotPress={onDotPress}
               maxIndicators={maxIndicators}
               activeIndicatorConfig={activeIndicatorConfig}
               inactiveIndicatorConfig={inactiveIndicatorConfig}
@@ -179,6 +182,7 @@ const CarouselDots = ({
             <Dot
               key={i}
               index={i}
+              onDotPress={onDotPress}
               maxIndicators={maxIndicators}
               activeIndicatorConfig={activeIndicatorConfig}
               inactiveIndicatorConfig={inactiveIndicatorConfig}

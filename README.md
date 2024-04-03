@@ -23,7 +23,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Package to configure you dots pagination carousel just like Instagram does. 
+Package to configure you dots pagination carousel just like Instagram does.
 With this package you could make whatever configuration you might need on your projects.
 
 ## Examples
@@ -68,6 +68,10 @@ export default function App() {
     setIndex(Math.max(index - 1, 0));
   };
 
+  const onDotPress = (dotIndex) => {
+    console.log('Pressed dot with index: ' + dotIndex);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -86,6 +90,7 @@ export default function App() {
       <AnimatedDotsCarousel
         length={LENGTH}
         currentIndex={index}
+        onDotPress={onDotPress}
         maxIndicators={4}
         interpolateOpacityAndColor={true}
         activeIndicatorConfig={{
@@ -140,7 +145,7 @@ export interface DotConfig {
 }
 ```
 
-#### DecreasingDot Interface 
+#### DecreasingDot Interface
 
 ```js
 export interface DecreasingDot {
@@ -150,16 +155,17 @@ export interface DecreasingDot {
 ```
 #### Props
 
-| **Prop**                    | **Type**                    | **Required(Default Value)**  | **Description**                                                |
-| --------------------------- | ----------------------------| ---------------------------- | ---------------------------------------------------            |
-| `length`                   | `number`                    | required                     | Length of the list you want to associate with the carousel dots                                        |
-| `currentIndex`                   | `number`                    | required                     | Current index of the list.                                     |
-| `maxIndicators`            | `number`                    | required                     | This number represents how many indicators you want to show, without decreasing size. Counting inactive indicators and the active indicator                 |
-| `activeIndicatorConfig`                 | `DotConfig`                    | required                          | This is an object with the configuration of the active indicator |
-| `inactiveIndicatorConfig`                  | `DotConfig`                   | required                        | This is an object with the configuration of the inactive indicator                                        |
-| `decreasingDots`                  | `DecreasingDot[]`                   | required                        | This is a list where you have to define the quantiy per element and the dot config. The quantity represents how many dots with this config you want per side (simetrically). The size of this elements should be decreasing size if you want this to look nice.      
-| `verticalOrientation`                  | `boolean`                   | false                        | If you want this oriented vertically or horizontally. Default is horizontally       
-| `interpolateOpacityAndColor`                  | `boolean`                   | true                        | Default is true. With this setted to true you will be able to see an animation everytime the activeDot change.            
+| **Prop**                    | **Type**                     | **Required(Default Value)** | **Description**                                                                                                                                                                                                                                                 |
+| --------------------------- |------------------------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `length`                   | `number`                     | required                    | Length of the list you want to associate with the carousel dots                                                                                                                                                                                                 |
+| `currentIndex`                   | `number`                     | required                    | Current index of the list.                                                                                                                                                                                                                                      |
+| `maxIndicators`            | `number`                     | required                    | This number represents how many indicators you want to show, without decreasing size. Counting inactive indicators and the active indicator                                                                                                                     |
+| `onDotPress`            | `(dotIndex: number) => void` | not required                | Fired when dot pressed. You can get index of pressed dot in function arg                                                                                                                                                                                        |
+| `activeIndicatorConfig`                 | `DotConfig`                  | required                    | This is an object with the configuration of the active indicator                                                                                                                                                                                                |
+| `inactiveIndicatorConfig`                  | `DotConfig`                  | required                    | This is an object with the configuration of the inactive indicator                                                                                                                                                                                              |
+| `decreasingDots`                  | `DecreasingDot[]`            | required                    | This is a list where you have to define the quantiy per element and the dot config. The quantity represents how many dots with this config you want per side (simetrically). The size of this elements should be decreasing size if you want this to look nice.
+| `verticalOrientation`                  | `boolean`                    | false                       | If you want this oriented vertically or horizontally. Default is horizontally
+| `interpolateOpacityAndColor`                  | `boolean`                    | true                        | Default is true. With this setted to true you will be able to see an animation everytime the activeDot change.
 
 
 <!-- ROADMAP -->
