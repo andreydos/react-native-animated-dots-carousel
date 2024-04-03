@@ -17,7 +17,7 @@ interface Dot {
   index: number;
   carouselState: CarouselState;
   verticalOrientation: boolean;
-  onDotPress?: (step: number) => void
+  onDotPress?: (dotIndex: number) => void
   interpolateOpacityAndColor: boolean;
 }
 

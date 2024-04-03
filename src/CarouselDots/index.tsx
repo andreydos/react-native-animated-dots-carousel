@@ -13,7 +13,7 @@ export interface CarouselDotsProps {
   length: number;
   currentIndex: number;
   maxIndicators: number;
-  onDotPress: (dotIndex: number) => void;
+  onDotPress?: (dotIndex: number) => void;
   activeIndicatorConfig: DotConfig;
   inactiveIndicatorConfig: DotConfig;
   decreasingDots: DecreasingDot[];
